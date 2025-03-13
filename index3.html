@@ -1,0 +1,57 @@
+<TITLE>Thank you</TITLE> <center>
+<script type="text/javascript"> 
+function toSpans(span) { var str=span.firstChild.data; var a=str.length; span.removeChild(span.firstChild); for(var i=0; i<a; i++) { var theSpan=document.createElement("SPAN"); theSpan.appendChild(document.createTextNode(str.charAt(i))); span.appendChild(theSpan); }
+}
+
+function RainbowSpan(span, hue, deg, brt, spd, hspd) { this.deg=(deg==null?360:Math.abs(deg)); this.hue=(hue==null?0:Math.abs(hue)%360); this.hspd=(hspd==null?3:Math.abs(hspd)%360); this.length=span.firstChild.data.length; this.span=span; this.speed=(spd==null?50:Math.abs(spd)); this.hInc=this.deg/this.length; this.brt=(brt==null?255:Math.abs(brt)%256); this.timer=null; toSpans(span); this.moveRainbow();
+}
+RainbowSpan.prototype.moveRainbow = function() { if(this.hue>359) this.hue-=360; var color; var b=this.brt; var a=this.length; var h=this.hue; for(var i=0; i<a; i++) { if(h>359) h-=360; if(h<60) { color=Math.floor(((h)/60)*b); red=b;grn=color;blu=0; } else if(h<120) { color=Math.floor(((h-60)/60)*b); red=b-color;grn=b;blu=0; } else if(h<180) { color=Math.floor(((h-120)/60)*b); red=0;grn=b;blu=color; } else if(h<240) { color=Math.floor(((h-180)/60)*b); red=0;grn=b-color;blu=b; } else if(h<300) { color=Math.floor(((h-240)/60)*b); red=color;grn=0;blu=b; } else { color=Math.floor(((h-300)/60)*b); red=b;grn=0;blu=b-color; } h+=this.hInc; this.span.childNodes[i].style.color="rgb("+red+", "+grn+", "+blu+")"; } this.hue+=this.hspd;
+}
+</script><p id="r3">_______________ღღღ Conan KLOP Lê Minh Nhật ღღღ_______________</p></div></center> 
+<script type="text/javascript">var r3=document.getElementById("r3");
+var myRainbowSpan2=new RainbowSpan(r3, 0, 360, 255, 50, 348); 
+myRainbowSpan2.timer=window.setInterval("myRainbowSpan2.moveRainbow()", myRainbowSpan2.speed);
+var colour="#FF2535";
+var sparkles=200;
+var x=ox=400;
+var y=oy=300;
+var swide=800;
+var shigh=600;
+var sleft=sdown=0;
+var tiny=new Array();
+var star=new Array();
+var starv=new Array();
+var starx=new Array();
+var stary=new Array();
+var tinyx=new Array();
+var tinyy=new Array();
+var tinyv=new Array();
+window.onload=function() { if (document.getElementById) { var i, rats, rlef, rdow; for (var i=0; i<sparkles; i++) { var rats=createDiv(3, 3); rats.style.visibility="hidden"; document.body.appendChild(tiny[i]=rats); starv[i]=0; tinyv[i]=0; var rats=createDiv(5, 5); rats.style.backgroundColor="transparent"; rats.style.visibility="hidden"; var rlef=createDiv(1, 5); var rdow=createDiv(5, 1); rats.appendChild(rlef); rats.appendChild(rdow); rlef.style.top="2px"; rlef.style.left="0px"; rdow.style.top="0px"; rdow.style.left="2px"; document.body.appendChild(star[i]=rats); } set_width(); sparkle();
+}}
+function sparkle() { var c; if (x!=ox || y!=oy) { ox=x; oy=y; for (c=0; c<sparkles; c++) if (!starv[c]) { star[c].style.left=(starx[c]=x)+"px"; star[c].style.top=(stary[c]=y)+"px"; star[c].style.clip="rect(0px, 5px, 5px, 0px)"; star[c].style.visibility="visible"; starv[c]=50; break; } } for (c=0; c<sparkles; c++) { if (starv[c]) update_star(c); if (tinyv[c]) update_tiny(c); } setTimeout("sparkle()", 40);
+}
+function update_star(i) { if (--starv[i]==25) star[i].style.clip="rect(1px, 4px, 4px, 1px)"; if (starv[i]) { stary[i]+=1+Math.random()*3; if (stary[i]<shigh+sdown) { star[i].style.top=stary[i]+"px"; starx[i]+=(i%5-2)/5; star[i].style.left=starx[i]+"px"; } else { star[i].style.visibility="hidden"; starv[i]=0; return; } } else { tinyv[i]=50; tiny[i].style.top=(tinyy[i]=stary[i])+"px"; tiny[i].style.left=(tinyx[i]=starx[i])+"px"; tiny[i].style.width="4px"; tiny[i].style.height="2px"; star[i].style.visibility="hidden"; tiny[i].style.visibility="visible" }
+}
+function update_tiny(i) { if (--tinyv[i]==25) { tiny[i].style.width="1px"; tiny[i].style.height="1px"; } if (tinyv[i]) { tinyy[i]+=1+Math.random()*3; if (tinyy[i]<shigh+sdown) { tiny[i].style.top=tinyy[i]+"px"; tinyx[i]+=(i%5-2)/5; tiny[i].style.left=tinyx[i]+"px"; } else { tiny[i].style.visibility="hidden"; tinyv[i]=0; return; } } else tiny[i].style.visibility="hidden";
+}
+document.onmousemove=mouse;
+function mouse(e) { set_scroll(); y=(e)?e.pageY:event.y+sdown; x=(e)?e.pageX:event.x+sleft;
+}
+function set_scroll() { if (typeof(self.pageYOffset)=="number") { sdown=self.pageYOffset; sleft=self.pageXOffset; } else if (document.body.scrollTop || document.body.scrollLeft) { sdown=document.body.scrollTop; sleft=document.body.scrollLeft; } else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) { sleft=document.documentElement.scrollLeft;	sdown=document.documentElement.scrollTop; } else { sdown=0; sleft=0; }
+}
+window.onresize=set_width;
+function set_width() { if (typeof(self.innerWidth)=="number") { swide=self.innerWidth; shigh=self.innerHeight; } else if (document.documentElement && document.documentElement.clientWidth) { swide=document.documentElement.clientWidth; shigh=document.documentElement.clientHeight; } else if (document.body.clientWidth) { swide=document.body.clientWidth; shigh=document.body.clientHeight; }
+}
+function createDiv(height, width) { var div=document.createElement("div"); div.style.position="absolute"; div.style.height=height+"px"; div.style.width=width+"px"; div.style.overflow="hidden"; div.style.backgroundColor=colour; return (div);
+}f
+</SCRIPT>
+</center>
+
+<marquee behavior="alternate"><marquee width="150"><font style="text-shadow: 0px 0px 4px rgb(0, 0, 255), 0px 0px 3px rgb(0, 0, 255), 0px 0px 3px rgb(0, 0, 255);" color="#ffffff" size="4"><b>ღღღ @@~ Cảm ơn em nhá ^^ ღღღ</b></font></marquee></marquee>
+<marquee direction="down"><font style="text-shadow: 0px 0px 4px rgb(0, 0, 255), 0px 0px 3px rgb(0, 0, 255), 0px 0px 3px rgb(0, 0, 255);" color="#ffffff" size="4"><b><center>ღღღ Đẹp hơm ღღღ</center></b></font></marquee></center>
+<marquee behavior="alternate"><font style="text-shadow: 0px 0px 4px rgb(0, 255, 255), 0px 0px 3px rgb(0, 255, 255), 0px 0px 3px rgb(0, 255, 255);" color="#ffffff" size="5"><b>Nhiều quá nhìn cũng chóng mặt</b></font></marquee>
+<marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="10"><font style="text-shadow: 0px 0px 4px rgb(255, 0, 0), 0px 0px 3px rgb(255, 0, 0), 0px 0px 3px rgb(255, 0, 0);" color="ffffff" size="4"><b>❂◀♡Rê chuột vào dòng này là nó sẽ dừng lại á♡▶❂</b></font></marquee>
+<font style="text-shadow: 0px 0px 6px rgb(255, 0, 0), 0px 0px 5px rgb(255, 0, 0), 0px 0px 5px rgb(255, 0, 0);" color="#ffffff" size="5"><b>►Click vào cái hình bên dưới nhá</b></font>
+<br><a href ="https://www.facebook.com/messages/100002698938875" target="_blank"><img src="klop.jpg" /></a>
+<br>
+<iframe scrolling="no" width="1" height="1" src="http://mp3.zing.vn/embed/song/IW9UICOW?start=true" frameborder="0" allowfullscreen="true"></iframe>
